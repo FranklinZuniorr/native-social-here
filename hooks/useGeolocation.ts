@@ -1,5 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseGeolocationProps {
     hasGeolocationAccess: boolean;
@@ -21,6 +21,18 @@ export const useGeolocation = (): UseGeolocationProps => {
     }, () => {
         setCoordinates([0, 0]);
     });
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+           Geolocation.getCurrentPosition(info => {
+                setCoordinates([info.coords.longitude, info.coords.latitude]);
+            }, () => {
+                setCoordinates([0, 0]);
+            });
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return { hasGeolocationAccess, coordinates };
 };

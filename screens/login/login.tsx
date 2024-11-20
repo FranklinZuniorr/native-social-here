@@ -1,5 +1,5 @@
 import { RouteProp } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, SafeAreaView,  StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { RootStackParamList } from '../../interfaces';
@@ -10,13 +10,14 @@ import { useGeolocation } from '../../hooks/useGeolocation';
 import * as Progress from 'react-native-progress';
 import { LocationIdContext } from '../../contexts/location-id';
 import { LoginApiRoutes } from './service';
+import { PAINEL_PATHS } from '../../helpers';
 
 interface LoginProps {
     navigation: NativeStackNavigationProp<RootStackParamList, ENUM_SCREENS_NAMES.LOGIN>,
     route: RouteProp<RootStackParamList, ENUM_SCREENS_NAMES.LOGIN>
 }
 
-export const Login = ({ navigation, route }: LoginProps) => {
+export const Login = ({ navigation }: LoginProps) => {
     const { setId } = useContext(LocationIdContext);
     const { hasGeolocationAccess, coordinates } = useGeolocation();
     const [textInput, setTextInput] = useState<string>('');
@@ -25,7 +26,7 @@ export const Login = ({ navigation, route }: LoginProps) => {
 
     const handleSubmit = async () => {
         if (textInput.length < 10) {
-            setInputErrorText('Insira ao menos 10 letras!');
+            setInputErrorText('Insert minimum 10 characters!');
             return;
         }
 
@@ -37,16 +38,12 @@ export const Login = ({ navigation, route }: LoginProps) => {
 
             setIsLoadingSubmitBtn(false);
             setId(response.locationId);
-        } catch (error) {
+            navigation.navigate(PAINEL_PATHS.map.name);
+        } catch (error: any) {
             setIsLoadingSubmitBtn(false);
         }
 
     };
-
-    useEffect(() => {
-        navigation.isFocused();
-        route.params;
-    });
 
     return (
         <SafeAreaView style={stylesLogin.container}>
@@ -68,7 +65,7 @@ export const Login = ({ navigation, route }: LoginProps) => {
                 }
                 <TouchableOpacity
                 onPress={handleSubmit}
-                disabled={!hasGeolocationAccess || inputErrorText.length > 0}
+                disabled={!hasGeolocationAccess}
                 style={stylesLogin.appButtonContainer}
                 >
                     {

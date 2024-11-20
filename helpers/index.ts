@@ -1,7 +1,19 @@
 import { ENUM_SCREENS_NAMES } from '../constants';
 
-export const PAINEL_PATHS = {
+interface PainelPaths {
+    login: {
+        name: ENUM_SCREENS_NAMES.LOGIN;
+    },
+    map: {
+        name: ENUM_SCREENS_NAMES.MAP;
+    }
+}
+
+export const PAINEL_PATHS: PainelPaths = {
     login: {
         name: ENUM_SCREENS_NAMES.LOGIN,
+    },
+    map: {
+        name: ENUM_SCREENS_NAMES.MAP,
     },
 };
