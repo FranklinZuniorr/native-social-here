@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView,  StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView,  StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { RootStackParamList } from '../../interfaces';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -27,6 +27,10 @@ export const Login = ({ navigation, route }: LoginProps) => {
         <SafeAreaView style={stylesLogin.container}>
             <StatusBar barStyle={'light-content'} backgroundColor={Colors.white} />
             <View style={stylesLogin.content}>
+                <Image
+                style={stylesLogin.logo}
+                source={require('../../assets/images/location.png')}
+                />
                 <Text style={stylesLogin.text}>Social Here</Text>
                 <TextInput
                 style={stylesLogin.input}

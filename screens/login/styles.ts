@@ -10,8 +10,13 @@ export const stylesLogin = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    logo: {
+        width: 50,
+        height: 50,
+        marginBottom: 10,
     },
     text: {
         fontFamily: 'Archivo Black',
