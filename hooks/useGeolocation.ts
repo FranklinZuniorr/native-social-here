@@ -17,7 +17,7 @@ export const useGeolocation = (): UseGeolocationProps => {
     });
 
     Geolocation.watchPosition(info => {
-        setCoordinates([info.coords.latitude, info.coords.longitude]);
+        setCoordinates([info.coords.longitude, info.coords.latitude]);
     }, () => {
         setCoordinates([0, 0]);
     });
