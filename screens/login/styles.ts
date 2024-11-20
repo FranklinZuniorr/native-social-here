@@ -40,6 +40,7 @@ export const stylesLogin = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 5,
         paddingHorizontal: 12,
+        alignItems: 'center',
     },
     appButtonText: {
         fontSize: 15,

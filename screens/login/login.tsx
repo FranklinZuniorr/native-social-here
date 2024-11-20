@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ENUM_SCREENS_NAMES } from '../../constants';
 import { stylesLogin } from './styles';
 import { useGeolocation } from '../../hooks/useGeolocation';
+import * as Progress from 'react-native-progress';
 
 interface LoginProps {
     navigation: NativeStackNavigationProp<RootStackParamList, ENUM_SCREENS_NAMES.LOGIN>,
@@ -37,7 +38,11 @@ export const Login = ({ navigation, route }: LoginProps) => {
                 disabled={!hasGeolocationAccess}
                 style={stylesLogin.appButtonContainer}
                 >
-                    <Text style={stylesLogin.appButtonText}>Entrar</Text>
+                    {
+                        hasGeolocationAccess ?
+                        <Text style={stylesLogin.appButtonText}>Entrar</Text> :
+                        <Progress.Circle size={30} indeterminate={true} borderWidth={5} borderColor="white" />
+                    }
                 </TouchableOpacity>
                 {
                     !hasGeolocationAccess &&
