@@ -25,7 +25,7 @@ export const stylesLogin = StyleSheet.create({
         fontSize: 18,
     },
     input: {
-        height: 40,
+        height: 50,
         width: '100%',
         marginTop: 30,
         borderWidth: 1,
@@ -34,11 +34,11 @@ export const stylesLogin = StyleSheet.create({
     },
     appButtonContainer: {
         width: '100%',
-        marginTop: 10,
+        marginTop: 15,
         elevation: 8,
         backgroundColor: '#009688',
         borderRadius: 5,
-        paddingVertical: 5,
+        paddingVertical: 8,
         paddingHorizontal: 12,
         alignItems: 'center',
     },

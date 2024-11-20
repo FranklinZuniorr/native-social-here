@@ -40,7 +40,7 @@ export const Login = ({ navigation, route }: LoginProps) => {
                 >
                     {
                         hasGeolocationAccess ?
-                        <Text style={stylesLogin.appButtonText}>Entrar</Text> :
+                        <Text style={stylesLogin.appButtonText}>Join</Text> :
                         <Progress.Circle size={30} indeterminate={true} borderWidth={5} borderColor="white" />
                     }
                 </TouchableOpacity>
