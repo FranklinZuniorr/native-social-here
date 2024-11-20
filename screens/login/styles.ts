@@ -37,9 +37,15 @@ export const stylesLogin = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
     },
+    textInputError: {
+        fontFamily: 'Archivo Black',
+        textAlign: 'center',
+        marginTop: 15,
+        fontSize: 14,
+    },
     appButtonContainer: {
         width: '100%',
-        marginTop: 15,
+        marginTop: 20,
         elevation: 8,
         backgroundColor: '#009688',
         borderRadius: 5,
