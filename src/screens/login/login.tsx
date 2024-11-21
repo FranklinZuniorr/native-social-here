@@ -8,7 +8,7 @@ import { ENUM_SCREENS_NAMES } from '../../constants';
 import { stylesLogin } from './styles';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import * as Progress from 'react-native-progress';
-import { LocationIdContext } from '../../contexts/location-id';
+import { GlobalStateContext } from '../../contexts/global-state';
 import { LoginApiRoutes } from './service';
 import { PAINEL_PATHS } from '../../helpers';
 
@@ -18,7 +18,7 @@ interface LoginProps {
 }
 
 export const Login = ({ navigation }: LoginProps) => {
-    const { setId } = useContext(LocationIdContext);
+    const { dispatch } = useContext(GlobalStateContext);
     const { hasGeolocationAccess, coordinates } = useGeolocation();
     const [textInput, setTextInput] = useState<string>('');
     const [inputErrorText, setInputErrorText] = useState<string>('');
@@ -37,7 +37,8 @@ export const Login = ({ navigation }: LoginProps) => {
             const response = await LoginApiRoutes.newLocation({ userName: textInput, location: { coordinates } });
 
             setIsLoadingSubmitBtn(false);
-            setId(response.locationId);
+            dispatch({ type: 'SET_LOCATION_ID', payload: response.locationId });
+            dispatch({ type: 'SET_USER_NAME', payload: textInput });
             navigation.navigate(PAINEL_PATHS.map.name);
         } catch (error: any) {
             setIsLoadingSubmitBtn(false);

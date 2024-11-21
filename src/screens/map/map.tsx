@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { BackHandler, Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Image, SafeAreaView, StatusBar, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../interfaces';
 import { ENUM_SCREENS_NAMES } from '../../constants';
 import { RouteProp } from '@react-navigation/native';
@@ -10,9 +10,9 @@ import MapView, { Circle, Marker } from 'react-native-maps';
 import { stylesMap } from './styles';
 import { LocationExternal } from './interfaces';
 import BackgroundTimer from 'react-native-background-timer';
-import { LocationIdContext } from '../../contexts/location-id';
 import { PAINEL_PATHS } from '../../helpers';
 import { PersonMarker } from './components/person-marker';
+import { GlobalStateContext } from '../../contexts/global-state';
 
 interface MapProps {
     navigation: NativeStackNavigationProp<RootStackParamList, ENUM_SCREENS_NAMES.MAP>,
@@ -20,7 +20,7 @@ interface MapProps {
 }
 
 export const Map = ({ navigation }: MapProps) => {
-    const { id: locationId } = useContext(LocationIdContext);
+    const { state: { locationId } } = useContext(GlobalStateContext);
     const RADIUS = 1000;
     const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
@@ -71,6 +71,10 @@ export const Map = ({ navigation }: MapProps) => {
 
     return (
         <SafeAreaView style={stylesMap.container}>
+            <StatusBar
+            animated={true}
+            backgroundColor="black"
+            />
             <View style={stylesMap.bottomContainer}>
                 <TouchableOpacity style={stylesMap.backBtn} onPress={() => navigation.navigate(PAINEL_PATHS.login.name)}>
                     <Image

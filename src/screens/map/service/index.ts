@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
-import { apiClient } from '../../../config/axios';
 import { GetLocationsApiRoutesExternalReturn, GetLocationsApiRoutesParams, UpdateLocationApiRoutesParams } from '../interfaces';
 import { MessageExternalReturn } from '../../../interfaces';
 import Toast from 'react-native-toast-message';
+import { apiClient } from '../../../config/axios';
 
 export class MapApiRoutes {
     static async getLocations(params: GetLocationsApiRoutesParams): Promise<GetLocationsApiRoutesExternalReturn> {

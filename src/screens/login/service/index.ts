@@ -1,8 +1,8 @@
 import Toast from 'react-native-toast-message';
-import { apiClient } from '../../../config/axios';
 import { NewLocationApiRoutesExternalReturn, NewLocationApiRoutesParams } from '../interfaces';
 import { AxiosError } from 'axios';
 import { MessageExternalReturn } from '../../../interfaces';
+import { apiClient } from '../../../config/axios';
 
 export class LoginApiRoutes {
     static async newLocation(params: NewLocationApiRoutesParams): Promise<NewLocationApiRoutesExternalReturn> {

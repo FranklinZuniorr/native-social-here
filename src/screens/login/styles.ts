@@ -47,7 +47,7 @@ export const stylesLogin = StyleSheet.create({
         width: '100%',
         marginTop: 20,
         elevation: 8,
-        backgroundColor: '#009688',
+        backgroundColor: 'black',
         borderRadius: 5,
         paddingVertical: 8,
         paddingHorizontal: 12,
