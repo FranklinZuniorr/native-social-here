@@ -16,6 +16,9 @@ export const stylesMap = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'white',
         boxShadow: '0px 0px 10px -5px',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 5,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -25,7 +28,7 @@ export const stylesMap = StyleSheet.create({
         zIndex: 999,
         bottom: 10,
     },
-    backBtn: {
+    btn: {
         backgroundColor: '#e3e3e3',
         height: '100%',
         borderRadius: '30%',

@@ -1,23 +1,28 @@
+import Mapbox from '@rnmapbox/maps';
 import React from 'react';
-import { Image } from 'react-native';
-import { Marker } from 'react-native-maps';
+import { Image, Text, View } from 'react-native';
+import { stylesPersonMarker } from './styles';
 
 interface PersonMarkerProps {
+    id: string;
     lat: number;
     long: number;
     userName: string;
 }
 
-export const PersonMarker = ({ lat, long, userName }: PersonMarkerProps) => {
+export const PersonMarker = ({ lat, long, userName, id }: PersonMarkerProps) => {
     return (
-        <Marker
-            coordinate={{ latitude: lat, longitude: long }}
-            title={userName}
-        >
-            <Image
-            source={require('../../../../assets/images/person.png')}
-            style={{ width: 35, height: 35, resizeMode: 'contain' }}
-            />
-        </Marker>
+        <Mapbox.MarkerView id={id} coordinate={[long, lat]} allowOverlap>
+            <View style={stylesPersonMarker.container}>
+                <Image
+                style={stylesPersonMarker.image}
+                source={require('../../../../assets/images/person.png')}
+                />
+
+                <View >
+                    <Text style={stylesPersonMarker.title}>{userName}</Text>
+                </View>
+            </View>
+        </Mapbox.MarkerView>
     );
 };
