@@ -21,7 +21,7 @@ interface MapProps {
 
 export const Map = ({ navigation }: MapProps) => {
     const { state: { locationId } } = useContext(GlobalStateContext);
-    const RADIUS = 1000;
+    const RADIUS = 5;
     const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
     const [locations, setLocations] = useState<LocationExternal[]>([]);
