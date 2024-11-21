@@ -1,23 +1,28 @@
-/* import { NativeStackNavigationProp } from '@react-navigation/native-stack'; */
-import React, { useCallback, useEffect, useState } from 'react';
-import { Image, SafeAreaView, Text, View } from 'react-native';
-/* import { RootStackParamList } from '../../interfaces';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { BackHandler, Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { RootStackParamList } from '../../interfaces';
 import { ENUM_SCREENS_NAMES } from '../../constants';
-import { RouteProp } from '@react-navigation/native'; */
+import { RouteProp } from '@react-navigation/native';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { MapApiRoutes } from './service';
 import MapView, { Circle, Marker } from 'react-native-maps';
 import { stylesMap } from './styles';
 import { LocationExternal } from './interfaces';
+import BackgroundTimer from 'react-native-background-timer';
+import { LocationIdContext } from '../../contexts/location-id';
+import { PAINEL_PATHS } from '../../helpers';
+import { PersonMarker } from './components/person-marker';
 
-/* interface MapProps {
+interface MapProps {
     navigation: NativeStackNavigationProp<RootStackParamList, ENUM_SCREENS_NAMES.MAP>,
     route: RouteProp<RootStackParamList, ENUM_SCREENS_NAMES.MAP>
-} */
+}
 
-export const Map = () => {
-    /* const { id: locationId } = useContext(LocationIdContext); */
+export const Map = ({ navigation }: MapProps) => {
+    const { id: locationId } = useContext(LocationIdContext);
     const RADIUS = 1000;
+    const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
     const [locations, setLocations] = useState<LocationExternal[]>([]);
 
@@ -42,9 +47,38 @@ export const Map = () => {
         return () => clearInterval(interval);
     }, [getLocations]);
 
+    useEffect(() => {
+        BackgroundTimer.runBackgroundTimer(() => {
+            MapApiRoutes.updateLocation({ locationId, coordinates });
+        }, FIVE_SECONDS);
+
+        return () => BackgroundTimer.stopBackgroundTimer();
+    }, [coordinates, locationId]);
+
+    const backAction = useCallback(() => {
+        navigation.navigate(PAINEL_PATHS.login.name);
+        return true;
+    }, [navigation]);
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction
+        );
+
+        return () => backHandler.remove();
+      }, [backAction]);
+
     return (
         <SafeAreaView style={stylesMap.container}>
-            <View style={stylesMap.bottomContainer}><Text>OI</Text></View>
+            <View style={stylesMap.bottomContainer}>
+                <TouchableOpacity style={stylesMap.backBtn} onPress={() => navigation.navigate(PAINEL_PATHS.login.name)}>
+                    <Image
+                    source={require('../../assets/images/switch.png')}
+                    style={stylesMap.backBtnImage}
+                    />
+                </TouchableOpacity>
+            </View>
             <MapView
             style={stylesMap.map}
             zoomControlEnabled
@@ -72,15 +106,12 @@ export const Map = () => {
 
                 {
                     locations.map(location => (
-                        <Marker
+                        <PersonMarker
                         key={location._id}
-                        coordinate={{ latitude: location.location.coordinates[1], longitude: location.location.coordinates[0] }}
-                        >
-                            <Image
-                            source={require('../../assets/images/person.png')}
-                            style={{ width: 35, height: 35, resizeMode: 'contain' }}
-                            />
-                        </Marker>
+                        userName={location.userName}
+                        lat={location.location.coordinates[1]}
+                        long={location.location.coordinates[0]}
+                        />
                     ))
                 }
             </MapView>

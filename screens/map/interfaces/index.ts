@@ -17,3 +17,8 @@ export interface LocationExternal {
 export interface GetLocationsApiRoutesExternalReturn {
     locations: LocationExternal[];
 }
+
+export interface UpdateLocationApiRoutesParams {
+    locationId: string;
+    coordinates: number[];
+}
