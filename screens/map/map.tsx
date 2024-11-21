@@ -105,14 +105,16 @@ export const Map = ({ navigation }: MapProps) => {
                 </Marker>
 
                 {
-                    locations.map(location => (
-                        <PersonMarker
-                        key={location._id}
-                        userName={location.userName}
-                        lat={location.location.coordinates[1]}
-                        long={location.location.coordinates[0]}
-                        />
-                    ))
+                    locations.map(location => {
+                        if (location._id !== locationId) {
+                            return <PersonMarker
+                            key={location._id}
+                            userName={location.userName}
+                            lat={location.location.coordinates[1]}
+                            long={location.location.coordinates[0]}
+                            />;
+                        }
+                    })
                 }
             </MapView>
         </SafeAreaView>
