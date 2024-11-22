@@ -6,6 +6,9 @@ interface PainelPaths {
     },
     map: {
         name: ENUM_SCREENS_NAMES.MAP;
+    },
+    chat: {
+        name: ENUM_SCREENS_NAMES.CHAT
     }
 }
 
@@ -15,5 +18,8 @@ export const PAINEL_PATHS: PainelPaths = {
     },
     map: {
         name: ENUM_SCREENS_NAMES.MAP,
+    },
+    chat: {
+        name: ENUM_SCREENS_NAMES.CHAT,
     },
 };

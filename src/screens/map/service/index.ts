@@ -26,9 +26,9 @@ export class MapApiRoutes {
             const response: MessageExternalReturn = axiosError.response?.data as MessageExternalReturn;
             Toast.show({
                 type: 'error',
-                text1: response.message,
+                text1: response.message || 'Locations error',
             });
-            throw new Error();
+            throw new Error(path);
         }
     }
 }

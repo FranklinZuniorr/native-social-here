@@ -16,7 +16,7 @@ export class LoginApiRoutes {
             const response: MessageExternalReturn = axiosError.response?.data as MessageExternalReturn;
             Toast.show({
                 type: 'error',
-                text1: response.message,
+                text1: response.message || 'Login error',
             });
             throw new Error(path);
         }

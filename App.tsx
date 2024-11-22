@@ -15,6 +15,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { Map } from './src/screens/map';
 import Toast from 'react-native-toast-message';
 import { GlobalStateProvider } from './src/contexts/global-state';
+import { Chat } from './src/screens/chat';
 
 Geolocation.setRNConfiguration({ skipPermissionRequests: false });
 
@@ -34,6 +35,11 @@ function App(): React.JSX.Element {
             <Stack.Screen
               name={PAINEL_PATHS.map.name}
               component={Map}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={PAINEL_PATHS.chat.name}
+              component={Chat}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

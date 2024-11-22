@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { BackHandler, Image, SafeAreaView, StatusBar, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../interfaces';
-import { ENUM_SCREENS_NAMES } from '../../constants';
+import { ENUM_SCREENS_NAMES, RADIUS } from '../../constants';
 import { RouteProp } from '@react-navigation/native';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { MapApiRoutes } from './service';
@@ -15,6 +15,7 @@ import { GlobalStateContext } from '../../contexts/global-state';
 import Mapbox from '@rnmapbox/maps';
 import { PersonMarker } from './components/person-marker';
 import { convertKmToPixels } from './helpers';
+import { useHasNewMessages } from '../../hooks/useHasNewMessages';
 
 Mapbox.setAccessToken('pk.eyJ1IjoicWRmcmFua2xpbiIsImEiOiJjbHMzb3JwdmIwb3g1MmpuNDUyMjByMnRrIn0.DzYyrtgJtNETXiLmg_lD3Q');
 
@@ -25,11 +26,11 @@ interface MapProps {
 
 export const Map = ({ navigation }: MapProps) => {
     const { state: { locationId } } = useContext(GlobalStateContext);
-    const RADIUS = 10;
     const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
     const [locations, setLocations] = useState<LocationExternal[]>([]);
     const [zoomLevelMap, setZoomLevelMap] = useState<number>(10);
+    useHasNewMessages();
 
     const increaseZoom = () => {
         setZoomLevelMap((prevZoom) => Math.min(prevZoom + 1, 15));
@@ -104,6 +105,12 @@ export const Map = ({ navigation }: MapProps) => {
                 <TouchableOpacity style={stylesMap.btn} onPress={decreaseZoom}>
                     <Image
                     source={require('../../assets/images/minus.png')}
+                    style={stylesMap.backBtnImage}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity style={stylesMap.btn} onPress={() => navigation.navigate(PAINEL_PATHS.chat.name)}>
+                    <Image
+                    source={require('../../assets/images/chat.png')}
                     style={stylesMap.backBtnImage}
                     />
                 </TouchableOpacity>
