@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { BackHandler, Image, SafeAreaView, StatusBar, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../interfaces';
 import { ENUM_SCREENS_NAMES, RADIUS } from '../../constants';
 import { RouteProp } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import Mapbox from '@rnmapbox/maps';
 import { PersonMarker } from './components/person-marker';
 import { convertKmToPixels } from './helpers';
 import { useHasNewMessages } from '../../hooks/useHasNewMessages';
+import * as Progress from 'react-native-progress';
 
 Mapbox.setAccessToken('pk.eyJ1IjoicWRmcmFua2xpbiIsImEiOiJjbHMzb3JwdmIwb3g1MmpuNDUyMjByMnRrIn0.DzYyrtgJtNETXiLmg_lD3Q');
 
@@ -28,6 +29,7 @@ export const Map = ({ navigation }: MapProps) => {
     const { state: { locationId } } = useContext(GlobalStateContext);
     const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
+    const [isLoadingMap, setIsLoadingMap] = useState<boolean>(true);
     const [locations, setLocations] = useState<LocationExternal[]>([]);
     const [zoomLevelMap, setZoomLevelMap] = useState<number>(10);
     useHasNewMessages();
@@ -48,6 +50,10 @@ export const Map = ({ navigation }: MapProps) => {
                 lat: coordinates[0],
             });
             setLocations(response.locations);
+
+            if (response.locations.length > 0) {
+                setIsLoadingMap(false);
+            }
         } catch (error) {
             setLocations([]);
         }
@@ -81,7 +87,7 @@ export const Map = ({ navigation }: MapProps) => {
         );
 
         return () => backHandler.remove();
-      }, [backAction]);
+    }, [backAction]);
 
     return (
         <SafeAreaView style={stylesMap.container}>
@@ -89,6 +95,19 @@ export const Map = ({ navigation }: MapProps) => {
             animated={true}
             backgroundColor="black"
             />
+            {
+                isLoadingMap &&
+                <View style={stylesMap.loadingMap}>
+                    <Progress.Circle size={30} indeterminate={true} borderWidth={5} borderColor="white" />
+                </View>
+            }
+            <View style={stylesMap.qtyLocationsContainer}>
+                <Text style={stylesMap.qtyText}>{locations.length}</Text>
+                <Image
+                source={require('../../assets/images/person1.png')}
+                style={stylesMap.qtyImg}
+                />
+            </View>
             <View style={stylesMap.bottomContainer}>
                 <TouchableOpacity style={stylesMap.btn} onPress={() => navigation.navigate(PAINEL_PATHS.login.name)}>
                     <Image
@@ -115,13 +134,17 @@ export const Map = ({ navigation }: MapProps) => {
                     />
                 </TouchableOpacity>
             </View>
-            <Mapbox.MapView style={stylesMap.map} logoEnabled={false} onCameraChanged={ev => {
+            <Mapbox.MapView
+            style={stylesMap.map}
+            logoEnabled={false}
+            onCameraChanged={ev => {
                 if (ev.gestures.isGestureActive) {
                     setZoomLevelMap(ev.properties.zoom);
                 }
-            }}>
+            }}
+            >
                 <Mapbox.Camera centerCoordinate={coordinates} maxZoomLevel={15} zoomLevel={zoomLevelMap} followZoomLevel={zoomLevelMap}/>
-                <Mapbox.UserLocation />
+                <Mapbox.UserLocation/>
                 <Mapbox.ShapeSource
                 id="circleSource"
                 shape={{

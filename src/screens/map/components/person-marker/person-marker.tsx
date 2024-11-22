@@ -16,7 +16,7 @@ export const PersonMarker = ({ lat, long, userName, id }: PersonMarkerProps) => 
             <View style={stylesPersonMarker.container}>
                 <Image
                 style={stylesPersonMarker.image}
-                source={require('../../../../assets/images/person.png')}
+                source={require('../../../../assets/images/person1.png')}
                 />
 
                 <View >

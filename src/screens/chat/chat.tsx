@@ -31,7 +31,7 @@ export const Chat = ({ navigation }: ChatProps) => {
     const getAllChats = useCallback(async () => {
         const response: ChatApiServiceExternalReturn =
         await ChatApiService.getAll({ lat: coordinates[0], long: coordinates[1], radiusInKm: RADIUS });
-        setChats([]);
+        setChats(response.chats);
         setIsLoadingChats(false);
     }, [coordinates]);
 
