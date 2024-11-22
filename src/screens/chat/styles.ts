@@ -36,6 +36,12 @@ export const stylesChat = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
     },
+    infoFeedbackText: {
+        fontFamily: 'Archivo Black',
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: 14,
+    },
     actionsArea: {
         flex: 1,
         maxHeight: 50,

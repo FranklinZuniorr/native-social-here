@@ -29,14 +29,10 @@ export const Chat = ({ navigation }: ChatProps) => {
     const [isLoadingChats, setIsLoadingChats] = useState<boolean>(true);
 
     const getAllChats = useCallback(async () => {
-        try {
-            const response: ChatApiServiceExternalReturn =
-            await ChatApiService.getAll({ lat: coordinates[0], long: coordinates[1], radiusInKm: RADIUS });
-            setChats(response.chats);
-            setIsLoadingChats(false);
-        } catch (error) {
-            setIsLoadingChats(false);
-        }
+        const response: ChatApiServiceExternalReturn =
+        await ChatApiService.getAll({ lat: coordinates[0], long: coordinates[1], radiusInKm: RADIUS });
+        setChats([]);
+        setIsLoadingChats(false);
     }, [coordinates]);
 
     const sendMessage = useCallback(async () => {
@@ -82,6 +78,10 @@ export const Chat = ({ navigation }: ChatProps) => {
                         <Progress.Circle size={30} indeterminate={true} borderWidth={5} borderColor="black" />
                     </View> :
                     <ScrollView style={stylesChat.messagesScroll}>
+                        {
+                            chats.length === 0 &&
+                            <Text style={stylesChat.infoFeedbackText}>None message found!</Text>
+                        }
                         {
                             chats.map(chat => (
                                 <Message key={chat._id} chat={chat} loggedUserName={userName} />
