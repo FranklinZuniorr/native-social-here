@@ -43,19 +43,15 @@ export const Map = ({ navigation }: MapProps) => {
     };
 
     const getLocations = useCallback(async () => {
-        try {
-            const response = await MapApiRoutes.getLocations({
-                radiusInKm: RADIUS,
-                long: coordinates[1],
-                lat: coordinates[0],
-            });
-            setLocations(response.locations);
+        const response = await MapApiRoutes.getLocations({
+            radiusInKm: RADIUS,
+            long: coordinates[1],
+            lat: coordinates[0],
+        });
+        setLocations(response.locations);
 
-            if (response.locations.length > 0) {
-                setIsLoadingMap(false);
-            }
-        } catch (error) {
-            setLocations([]);
+        if (response.locations.length > 0) {
+            setIsLoadingMap(false);
         }
     }, [coordinates]);
 
