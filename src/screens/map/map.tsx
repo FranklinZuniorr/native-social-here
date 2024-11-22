@@ -26,7 +26,7 @@ interface MapProps {
 }
 
 export const Map = ({ navigation }: MapProps) => {
-    const { state: { locationId } } = useContext(GlobalStateContext);
+    const { state: { locationId, isRunningUpdateLocationBackground }, dispatch } = useContext(GlobalStateContext);
     const FIVE_SECONDS = 5000;
     const { coordinates } = useGeolocation();
     const [isLoadingMap, setIsLoadingMap] = useState<boolean>(true);
@@ -59,21 +59,27 @@ export const Map = ({ navigation }: MapProps) => {
         }
     }, [coordinates]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const interval = setInterval(() => {
             getLocations();
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [getLocations]);
-
-    useEffect(() => {
-        BackgroundTimer.runBackgroundTimer(() => {
-            MapApiRoutes.updateLocation({ locationId, coordinates });
         }, FIVE_SECONDS);
 
-        return () => BackgroundTimer.stopBackgroundTimer();
-    }, [coordinates, locationId]);
+        return () => clearInterval(interval);
+    }, [getLocations]); */
+
+    useEffect(() => {
+        console.warn(coordinates);
+        if ( isRunningUpdateLocationBackground) {
+            console.warn('bateu');
+            return;
+        }
+
+        BackgroundTimer.runBackgroundTimer(() => {
+            console.warn(34234);
+            dispatch({ type: 'SET_IS_RUNNING_UPDATE_LOCATION_BACKGROUND', payload: true });
+            MapApiRoutes.updateLocation({ locationId, coordinates });
+        }, FIVE_SECONDS);
+    }, [coordinates, locationId, isRunningUpdateLocationBackground, dispatch]);
 
     const backAction = useCallback(() => {
         navigation.navigate(PAINEL_PATHS.login.name);

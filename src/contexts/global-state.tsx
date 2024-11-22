@@ -3,11 +3,13 @@ import React, { createContext, useReducer, ReactNode } from 'react';
 interface GlobalState {
   locationId: string;
   userName: string;
+  isRunningUpdateLocationBackground: boolean;
 }
 
 type GlobalStateAction =
   | { type: 'SET_LOCATION_ID'; payload: string }
-  | { type: 'SET_USER_NAME'; payload: string };
+  | { type: 'SET_USER_NAME'; payload: string }
+  | { type: 'SET_IS_RUNNING_UPDATE_LOCATION_BACKGROUND'; payload: boolean };
 
 const globalStateReducer = (state: GlobalState, action: GlobalStateAction): GlobalState => {
   switch (action.type) {
@@ -15,6 +17,8 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
       return { ...state, locationId: action.payload };
     case 'SET_USER_NAME':
       return { ...state, userName: action.payload };
+    case 'SET_IS_RUNNING_UPDATE_LOCATION_BACKGROUND':
+      return { ...state, isRunningUpdateLocationBackground: action.payload };
     default:
       throw new Error('`Unknown action type');
   }
@@ -23,6 +27,7 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
 const initialState: GlobalState = {
   locationId: '',
   userName: '',
+  isRunningUpdateLocationBackground: false,
 };
 
 interface GlobalStateContextProps {
