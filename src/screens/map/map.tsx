@@ -59,23 +59,20 @@ export const Map = ({ navigation }: MapProps) => {
         }
     }, [coordinates]);
 
-    /* useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
             getLocations();
         }, FIVE_SECONDS);
 
         return () => clearInterval(interval);
-    }, [getLocations]); */
+    }, [getLocations]);
 
     useEffect(() => {
-        console.warn(coordinates);
         if ( isRunningUpdateLocationBackground) {
-            console.warn('bateu');
             return;
         }
 
         BackgroundTimer.runBackgroundTimer(() => {
-            console.warn(34234);
             dispatch({ type: 'SET_IS_RUNNING_UPDATE_LOCATION_BACKGROUND', payload: true });
             MapApiRoutes.updateLocation({ locationId, coordinates });
         }, FIVE_SECONDS);
