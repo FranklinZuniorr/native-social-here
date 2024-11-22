@@ -33,10 +33,7 @@ export const Chat = ({ navigation }: ChatProps) => {
             const response: ChatApiServiceExternalReturn =
             await ChatApiService.getAll({ lat: coordinates[0], long: coordinates[1], radiusInKm: RADIUS });
             setChats(response.chats);
-
-            if (response.chats.length > 0) {
-                setIsLoadingChats(false);
-            }
+            setIsLoadingChats(false);
         } catch (error) {
             setIsLoadingChats(false);
         }

@@ -34,6 +34,7 @@ export const stylesChat = StyleSheet.create({
         maxHeight: '100%',
         backgroundColor: 'white',
         paddingLeft: 10,
+        paddingRight: 10,
     },
     actionsArea: {
         flex: 1,
