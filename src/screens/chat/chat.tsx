@@ -38,7 +38,7 @@ export const Chat = ({ navigation }: ChatProps) => {
                 setIsLoadingChats(false);
             }
         } catch (error) {
-            setIsLoadingChats(true);
+            setIsLoadingChats(false);
         }
     }, [coordinates]);
 

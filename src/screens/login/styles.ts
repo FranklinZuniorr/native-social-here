@@ -36,6 +36,7 @@ export const stylesLogin = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
+        color: 'black',
     },
     textInputError: {
         fontFamily: 'Archivo Black',

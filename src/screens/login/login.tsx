@@ -55,6 +55,7 @@ export const Login = ({ navigation }: LoginProps) => {
                 source={require('../../assets/images/location.png')}
                 />
                 <Text style={stylesLogin.text}>Social Here</Text>
+                <Text>Your world, closer to you.</Text>
                 <TextInput
                 style={stylesLogin.input}
                 onChangeText={setTextInput}
