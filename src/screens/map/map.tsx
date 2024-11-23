@@ -49,10 +49,7 @@ export const Map = ({ navigation }: MapProps) => {
             lat: coordinates[0],
         });
         setLocations(response.locations);
-
-        if (response.locations.length > 0) {
-            setIsLoadingMap(false);
-        }
+        setIsLoadingMap(false);
     }, [coordinates]);
 
     useEffect(() => {
